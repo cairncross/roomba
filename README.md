@@ -7,7 +7,6 @@
 - Send POST requests to `localhost:8080/input`
 
 ## To-do
-What could have been done given more time:
 - Persisting Roomba state
 - Roomba statistics and analytics
 - Appealing GUI in a JS framework
