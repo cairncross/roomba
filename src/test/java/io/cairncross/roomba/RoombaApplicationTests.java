@@ -99,7 +99,6 @@ public class RoombaApplicationTests {
 		patches.add(new int[] {4, 3});
 		patches.add(new int[] {4, 2});
 
-
 		Input input = Input.builder()
 				.roomSize(new int[] {5, 5})
 				.coords(new int[] {0, 0})
