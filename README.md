@@ -1,5 +1,5 @@
 # Roomba
-Live webservice at http://roomba-service-dev.cfapps.io/input
+Live webservice at: http://roomba-service-dev.cfapps.io/input
 ## Instructions
 - Install and run mongodb
 - Clone repo and cd
