@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class Output {
     private int[] coords;
     private int patches;
-    private String print;
 }
