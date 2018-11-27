@@ -22,21 +22,8 @@ public class RoombaServiceImpl implements RoombaService {
         validateRoomSize(input.getRoomSize());
         validateCoords(input.getCoords(), input.getRoomSize());
         validateInstructions(input.getInstructions());
-        int[][] room = initializeRoom(input.getRoomSize(), input.getPatches());
-//        int rows = input.getRoomSize()[1];
-//        int columns = input.getRoomSize()[0];
-//        boolean[][] room = new boolean[rows][columns];
-//        for (boolean[] row: room) Arrays.fill(row, false);
-//        List<int[]> moves = generateMoves(input.getCoords(), input.getInstructions());
+        validatePatches(input.getRoomSize(), input.getPatches());
         Stack<int[]> moves = generateMoves(input.getCoords(), input.getInstructions(), input.getRoomSize());
-//        Stack<int[]> moves = new Stack<>();
-//        moves.push(input.getCoords());
-//        for (char direction: input.getInstructions().toCharArray()) {
-//            int[] prevPosition = moves.peek();
-//            int[] newPosition = move(prevPosition, direction, input.getRoomSize());
-//            moves.push(newPosition);
-//            System.out.println(newPosition[0] + " " + newPosition[1]);
-//        }
         int cleanedPatches = 0;
         for (int[] patch: input.getPatches()) {
             for (int[] move: moves) {
@@ -51,17 +38,7 @@ public class RoombaServiceImpl implements RoombaService {
                 .patches(cleanedPatches)
                 .build();
         input.setOutput(output);
-        Output savedOutput = roombaRepository.save(input).getOutput();
-        String str = "";
-        System.out.println("print map");
-        for (int i = 0; i < room.length; i++) {
-            for (int j = 0; j < room[0].length; j++) {
-                str += Integer.toString(room[i][j]) + " ";
-            }
-            System.out.println(str + "\n");
-            str = "";
-        }
-        return savedOutput;
+        return roombaRepository.save(input).getOutput();
     }
 
     public void validateInstructions(String instructions) throws RoombaException {
@@ -88,18 +65,12 @@ public class RoombaServiceImpl implements RoombaService {
         }
     }
 
-    public int[][] initializeRoom(int[] roomSize, List<int[]> patches) throws RoombaException {
-        int rows = roomSize[1];
-        int columns = roomSize[0];
-        int[][] room = new int[rows][columns];
-        for (int[] row: room) Arrays.fill(row, 0);
+    public void validatePatches(int[] roomSize, List<int[]> patches) throws RoombaException {
         for (int[] patch: patches) {
             if (patch[0] > roomSize[0] - 1 || patch[1] > roomSize[1] - 1){
                 throw new RoombaException(HttpStatus.BAD_REQUEST, "Patch is out of room bounds");
             }
-            room[patch[1]][patch[0]] = 1;
         }
-        return room;
     }
 
     public Stack<int[]> generateMoves(int[] coords, String instructions, int[] roomSize) {
