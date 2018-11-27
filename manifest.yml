@@ -1,0 +1,7 @@
+---
+applications:
+- name: roomba-service-dev
+  buildpack: java_buildpack
+  env:
+    _JAVA_OPTIONS: -Dlogging.level.org.springframework.web=DEBUG -Dlogging.level.org.springframework.ws.client.MessageTracing.sent=DEBUG -Dlogging.level.org.springframework.ws.client.MessageTracing.received=DEBUG -Dspring.profiles.active=dev
+
