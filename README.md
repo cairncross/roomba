@@ -7,7 +7,7 @@
 - Send POST requests to `localhost:8080/input`
 
 ## To-do
-- Persitant state
+- Persistent room and roomba state
 - Statistics and analytics
 - Appealing browser GUI in a JS framework
 - Comprehensive test suite
