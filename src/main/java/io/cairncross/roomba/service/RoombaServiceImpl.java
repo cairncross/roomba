@@ -7,7 +7,9 @@ import io.cairncross.roomba.repository.RoombaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 public class RoombaServiceImpl implements RoombaService {
 
@@ -18,8 +20,8 @@ public class RoombaServiceImpl implements RoombaService {
     public Output processInput(Input input) throws RoombaException {
 
         validateRoomSize(input.getRoomSize());
-        validateInstructions(input.getInstructions().toUpperCase());
         validateCoords(input.getCoords(), input.getRoomSize());
+        validateInstructions(input.getInstructions());
         int[][] room = initializeRoom(input.getRoomSize(), input.getPatches());
 //        int rows = input.getRoomSize()[1];
 //        int columns = input.getRoomSize()[0];
@@ -27,6 +29,7 @@ public class RoombaServiceImpl implements RoombaService {
 //        for (boolean[] row: room) Arrays.fill(row, false);
 //        List<int[]> moves = generateMoves(input.getCoords(), input.getInstructions());
         Stack<int[]> moves = generateMoves(input.getCoords(), input.getInstructions(), input.getRoomSize());
+//        Stack<int[]> moves = new Stack<>();
 //        moves.push(input.getCoords());
 //        for (char direction: input.getInstructions().toCharArray()) {
 //            int[] prevPosition = moves.peek();
@@ -62,7 +65,11 @@ public class RoombaServiceImpl implements RoombaService {
     }
 
     public void validateInstructions(String instructions) throws RoombaException {
-        for (char c: instructions.toCharArray()) {
+
+        if (instructions == null || instructions.length() == 0) {
+            throw new RoombaException(HttpStatus.BAD_REQUEST, "Instructions string length must be greater than 0");
+        }
+        for (char c: instructions.toUpperCase().toCharArray()) {
             if (c != 'N' && c != 'E' && c != 'S' && c != 'W') {
                 throw new RoombaException(HttpStatus.BAD_REQUEST, "Instruction string must only consist of characters 'N', 'E', 'S' and 'W'");
             }

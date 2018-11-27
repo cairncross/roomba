@@ -14,11 +14,6 @@ public class RoombaController {
     @Autowired
     private RoombaService roombaService;
 
-//    @GetMapping("/input")
-//    public ResponseEntity<String> input() {
-//        return roombaService.processInput();
-//    }
-
     @PostMapping("/input")
     public ResponseEntity<Output> input(@RequestBody Input input) throws RoombaException {
         Output output = roombaService.processInput(input);
